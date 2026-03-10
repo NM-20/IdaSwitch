@@ -23,7 +23,7 @@
 namespace IdaSwitch
 {
 
-/* The following implementation is based on Atmosphère's kern_k_initial_process_reader.cpp:
+/* The following implementation is based on Atmosphï¿½re's kern_k_initial_process_reader.cpp:
    https://github.com/Atmosphere-NX/Atmosphere/blob/master/libraries/libmesosphere/source/kern_k_initial_process_reader.cpp
 */
 enum KipFlags : u32
@@ -248,19 +248,10 @@ void LoadKip(const std::vector<u8> &in_buffer)
       current_segment->update();
     }
 
-    std::vector<ElfSym> symbols = RecoverSymbols(is_32, base, bitness, dynamic, segments);
-    
-    /* While the original loader does this after the `auto_make_proc` calls below, we'll move it here to align it with the other
-       symbol handling.
+    /* While we don't need the symbols returned by this function, we still need to call it to i.e. handle relocations and imports
+       for the database.
     */
-    for (const ElfSym &current : symbols)
-    {
-      if (current.Name == "nnMain")
-      {
-        setinf(INF_START_IP, (base + current.Value));
-        break;
-      }
-    }
+    RecoverSymbols(is_32, base, bitness, dynamic, segments);
   }
 
   auto_make_proc(base + header->TextOffset);

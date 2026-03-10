@@ -58,7 +58,6 @@ constexpr u32 R_AARCH64_ABS32 =
 constexpr u32 R_AARCH64_ABS64 =
   257;
 
-
 constexpr u32 R_AARCH64_GLOB_DAT =
   1025;
 
